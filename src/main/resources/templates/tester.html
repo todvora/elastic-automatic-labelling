@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Content page</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Automatic tagging tester</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="/tester">
+
+                        <div class="form-group" th:if="${source}">
+                            <label>Source:</label>
+                            <a th:href="${source.url}" th:text="'Wikipedia: ' + ${source.title}"></a>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text">Text:</label>
+                            <textarea class="form-control" id="text" name="text" th:text="${result} ? ${result.text} : ''"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Discover tags</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default" th:if="${result}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Discovered tags</h3>
+                </div>
+                <div class="panel-body">
+                    Elastic hits returned in <span th:text="${result.responseTime}"></span> ms.
+                    <div class="media"  th:each="tag : ${result.tags}">
+                        <div class="media-body">
+                            <strong class="media-heading" th:text="${tag.value}"></strong> <span class="label label-default" th:text="${tag.score}"></span>
+                            <p th:utext="${tag.highlighted}"></p>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning" role="alert" th:if="${result.tags.empty}">No tags detected.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Content page</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create new tags</h3>
+        </div>
+        <div class="panel-body">
+            <form method="post" action="/elastic">
+                <div class="form-group">
+                    <label for="tags">New tags:</label>
+                    <textarea class="form-control" id="tags" name="tags"
+                              placeholder="Add comma separated tags..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add to index</button>
+                <button type="submit" class="btn btn-danger" name="drop-create" value="true">Re-create index</button>
+                <button type="submit" class="btn btn-warning" formaction="/elastic-ted" value="true">TED topics</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">All known tags</h3>
+        </div>
+        <div class="panel-body">
+            <div class="tags">
+                <span th:each="tag : ${tags}" th:text="${tag}" class="label label-default"></span>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+
