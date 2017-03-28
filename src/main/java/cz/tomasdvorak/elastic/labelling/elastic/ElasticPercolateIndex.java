@@ -33,11 +33,16 @@ import java.util.stream.StreamSupport;
 public class ElasticPercolateIndex {
 
     private static final String INDEX_NAME = "percolate-tags";
+    private static final String ANALYZER = "english";
 
     private static final Logger logger = LogManager.getLogger(ElasticPercolateIndex.class);
 
+    private final ElasticClient elastic;
+
     @Autowired
-    private ElasticClient elastic;
+    public ElasticPercolateIndex(final ElasticClient elastic) {
+        this.elastic = elastic;
+    }
 
     public ElasticHits discoverTags(final String inputText) throws IOException {
 
@@ -95,7 +100,7 @@ public class ElasticPercolateIndex {
             // create an index with a percolator field with the name 'query':
             elastic.getClient().admin().indices().prepareCreate(INDEX_NAME)
                     .addMapping("query", "query", "type=percolator")
-                    .addMapping("docs", "content", "type=text,analyzer=english")
+                    .addMapping("docs", "content", "type=text,analyzer=" + ANALYZER)
                     .get();
         }
 

@@ -11,12 +11,15 @@ public class Wikipedia {
 
     private static final String API_URL = "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts&format=json&explaintext";
 
+    private final RestTemplate restTemplate;
+
     @Autowired
-    private RestTemplate restTemplate;
+    public Wikipedia(final RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public WikiPage getRandomPage() {
         WikiResponse response = restTemplate.getForObject(API_URL, WikiResponse.class);
-        final WikiPage page = response.getQuery().getPages().entrySet().iterator().next().getValue();
-        return page;
+        return response.getQuery().getPages().entrySet().iterator().next().getValue();
     }
 }

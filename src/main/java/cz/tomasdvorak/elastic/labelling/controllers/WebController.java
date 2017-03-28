@@ -18,14 +18,16 @@ import java.util.Collection;
 @Controller
 public class WebController {
 
-    @Autowired
-    private ElasticPercolateIndex elastic;
+    private final ElasticPercolateIndex elastic;
+    private final Wikipedia wikipedia;
+    private final PredefinedTopics predefinedTopics;
 
     @Autowired
-    private Wikipedia wikipedia;
-
-    @Autowired
-    private PredefinedTopics predefinedTopics;
+    public WebController(final ElasticPercolateIndex elastic, final Wikipedia wikipedia, final PredefinedTopics predefinedTopics) {
+        this.elastic = elastic;
+        this.wikipedia = wikipedia;
+        this.predefinedTopics = predefinedTopics;
+    }
 
     @RequestMapping("/")
     public String index() {
