@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class TedTopics {
+public class PredefinedTopics {
 
-    @Value("classpath:/ted-topics.txt")
+    @Value("classpath:/predefined-topics.txt")
     private Resource inputFile;
 
     public Collection<String> getTopics() throws IOException {

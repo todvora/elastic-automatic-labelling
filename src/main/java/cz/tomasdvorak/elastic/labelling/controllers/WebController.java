@@ -2,8 +2,8 @@ package cz.tomasdvorak.elastic.labelling.controllers;
 
 import cz.tomasdvorak.elastic.labelling.api.Wikipedia;
 import cz.tomasdvorak.elastic.labelling.api.dto.WikiPage;
-import cz.tomasdvorak.elastic.labelling.elastic.ElasticPrecolateIndex;
-import cz.tomasdvorak.elastic.labelling.tags.TedTopics;
+import cz.tomasdvorak.elastic.labelling.elastic.ElasticPercolateIndex;
+import cz.tomasdvorak.elastic.labelling.tags.PredefinedTopics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +19,13 @@ import java.util.Collection;
 public class WebController {
 
     @Autowired
-    private ElasticPrecolateIndex elastic;
+    private ElasticPercolateIndex elastic;
 
     @Autowired
     private Wikipedia wikipedia;
 
     @Autowired
-    private TedTopics tedTopics;
+    private PredefinedTopics predefinedTopics;
 
     @RequestMapping("/")
     public String index() {
@@ -37,13 +37,13 @@ public class WebController {
         if(dropCreate) {
             elastic.dropCreate();
         }
-        elastic.addTags(Arrays.asList(tags.split(",")));
+        elastic.addTags(Arrays.asList(tags.split(",|\n")));
         return "redirect:/elastic";
     }
 
-    @RequestMapping(value = "/elastic-ted", method = RequestMethod.POST)
-    public String tedTopics() throws IOException {
-        final Collection<String> topics = tedTopics.getTopics();
+    @RequestMapping(value = "/tags/predefined", method = RequestMethod.POST)
+    public String loadPredefinedTopics() throws IOException {
+        final Collection<String> topics = predefinedTopics.getTopics();
         elastic.dropCreate();
         elastic.addTags(topics);
         return "redirect:/elastic";

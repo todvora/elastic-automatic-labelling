@@ -15,12 +15,18 @@
                 <div class="form-group">
                     <label for="tags">New tags:</label>
                     <textarea class="form-control" id="tags" name="tags"
-                              placeholder="Add comma separated tags..."></textarea>
+                              placeholder="Add comma or newline separated tags..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add to index</button>
-                <button type="submit" class="btn btn-danger" name="drop-create" value="true">Re-create index</button>
-                <button type="submit" class="btn btn-warning" formaction="/elastic-ted" value="true">TED topics</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Append to index</button>
+                    <button type="submit" class="btn btn-danger" name="drop-create" value="true">Replace current index</button>
+                    <button type="submit" class="btn btn-warning" formaction="/tags/predefined" value="true">Use predefined topics</button>
+                </div>
             </form>
+            <ul>
+                <li>There is always the <strong><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-lang-analyzer.html#english-analyzer">english</a></strong> analyzer used.</li>
+                <li>Predefined topics like 'Architecture' or 'Food' are obtained from <a href="https://www.ted.com/topics">ted.com/topics</a>.</li>
+            </ul>
         </div>
     </div>
 

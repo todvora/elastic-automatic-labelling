@@ -35,7 +35,7 @@
                     <h3 class="panel-title">Discovered tags</h3>
                 </div>
                 <div class="panel-body">
-                    Elastic hits returned in <span th:text="${result.responseTime}"></span> ms.
+                    Elastic returned <span th:text="${result.tags.size()}"></span> of <span th:text="${result.totalHits}"></span> results in <span th:text="${result.responseTime}"></span> ms. Max score is <span th:text="${result.maxScore}"></span>.
                     <div class="media"  th:each="tag : ${result.tags}">
                         <div class="media-body">
                             <strong class="media-heading" th:text="${tag.value}"></strong> <span class="label label-default" th:text="${tag.score}"></span>
