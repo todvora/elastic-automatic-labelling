@@ -5,6 +5,7 @@ import cz.tomasdvorak.elastic.labelling.api.dto.WikiPage;
 import cz.tomasdvorak.elastic.labelling.elastic.ElasticPercolateIndex;
 import cz.tomasdvorak.elastic.labelling.tags.PredefinedTopics;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,16 +19,16 @@ import java.util.Collection;
 @Controller
 public class WebController {
 
-    private final ElasticPercolateIndex elastic;
-    private final Wikipedia wikipedia;
-    private final PredefinedTopics predefinedTopics;
+    @Lazy
+    @Autowired
+    private ElasticPercolateIndex elastic;
 
     @Autowired
-    public WebController(final ElasticPercolateIndex elastic, final Wikipedia wikipedia, final PredefinedTopics predefinedTopics) {
-        this.elastic = elastic;
-        this.wikipedia = wikipedia;
-        this.predefinedTopics = predefinedTopics;
-    }
+    private Wikipedia wikipedia;
+
+    @Autowired
+    private PredefinedTopics predefinedTopics;
+
 
     @RequestMapping("/")
     public String index() {

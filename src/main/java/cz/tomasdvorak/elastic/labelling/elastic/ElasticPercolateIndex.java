@@ -21,6 +21,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Lazy
 @Component
 public class ElasticPercolateIndex {
 
@@ -37,12 +39,10 @@ public class ElasticPercolateIndex {
 
     private static final Logger logger = LogManager.getLogger(ElasticPercolateIndex.class);
 
-    private final ElasticClient elastic;
-
+    @Lazy
     @Autowired
-    public ElasticPercolateIndex(final ElasticClient elastic) {
-        this.elastic = elastic;
-    }
+    private ElasticClient elastic;
+
 
     public ElasticHits discoverTags(final String inputText) throws IOException {
 
